@@ -34,7 +34,7 @@ export const blogReducer = (state = initialState, action) => {
       console.log(action.payload, state.state);
       return {
         ...state,
-        state: state.state.filter((blog) => blog._id !== action.payload.id),
+        state: state.state.filter((blog) => blog.id !== action.payload.id),
       };
 
     case Get_Blog:

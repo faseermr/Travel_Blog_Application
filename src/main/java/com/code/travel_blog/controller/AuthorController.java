@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +40,7 @@ public class AuthorController {
     JwtUtills jwtUtills;
 
 @PostMapping("/signup")
-public ResponseEntity<?> createUser(@RequestBody SignupRequest signupRequest){
+public ResponseEntity<?> createUser(@Valid @RequestBody SignupRequest signupRequest){
     //System.out.println("body : " + signupRequest.getUsername());
     if (authorRepository.existsByUsername( signupRequest.getUsername())) {
         return ResponseEntity
@@ -65,10 +66,10 @@ return ResponseEntity.status(HttpStatus.CREATED).body(new MessageResponse("Succe
 
 @PostMapping("/signin")
 public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest){
-    System.out.println("body : "+ loginRequest.getUsername() + " " + loginRequest.getPassword());
+    //System.out.println("body : "+ loginRequest.getUsername() + " " + loginRequest.getPassword());
     Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-    System.out.println("body1111 : "+ loginRequest.getUsername() + loginRequest.getPassword());
+   // System.out.println("body1111 : "+ loginRequest.getUsername() + loginRequest.getPassword());
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
     String jwt = jwtUtills.generateJwtToken(authentication);

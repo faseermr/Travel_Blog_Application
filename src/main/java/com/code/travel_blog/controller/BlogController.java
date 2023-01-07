@@ -6,6 +6,8 @@ import com.code.travel_blog.model.Author;
 import com.code.travel_blog.model.Blog;
 import com.code.travel_blog.payload.response.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
@@ -27,7 +29,10 @@ public class BlogController {
 
     @Autowired
     private AuthorRepository authorRepository;
-    private final String FOLDER_PATH="E:/SpringBoot/travel_blog/blog-client/public/uploads/";
+    @Value("${app.uploads}")
+    private String FOLDER_PATH;
+
+            //="E:/SpringBoot/travel_blog/blog-client/public/uploads/";
 
 //    @PostMapping()
 //    public ResponseEntity<?> addBlogs(@RequestParam MultipartFile image, @RequestParam String title,
@@ -56,7 +61,7 @@ public class BlogController {
 
     @GetMapping
     public ResponseEntity<?> getAllBlogs(){
-       List<Blog> blog = blogRepository.findAll();
+       List<Blog> blog = blogRepository.findAll(Sort.by("id").descending());
         return ResponseEntity.status(HttpStatus.OK).body(blog);
     }
 
@@ -68,7 +73,7 @@ public class BlogController {
 
     @GetMapping("/username/{name}")
     public ResponseEntity<?> getBlogByUsername(@PathVariable("name") String name){
-        List<Blog> blog=  blogRepository.findByAuthorUsername(name);
+        List<Blog> blog=  blogRepository.findByAuthorUsername(name,Sort.by("id").descending());
         return ResponseEntity.status(HttpStatus.OK).body(blog);
     }
 

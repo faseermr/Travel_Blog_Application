@@ -1,11 +1,18 @@
 package com.code.travel_blog.payload.request;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 public class SignupRequest {
 
+    @NotBlank(message = "username is required")
     private String username;
 
+    @NotBlank(message = "email is required")
+    @Email(message = "invalid email")
     private String email;
 
+    @NotBlank(message="password is required")
     private String password;
 
     public SignupRequest() {

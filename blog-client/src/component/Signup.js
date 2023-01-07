@@ -38,7 +38,16 @@ const Signup = () => {
         window.location.reload();
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        console.log("error : ", err);
+        if (
+          err.response.data.username ||
+          err.response.data.password ||
+          err.response.data.email
+        ) {
+          alert("Please provide valid informations");
+        } else {
+          alert(err.response.data.message);
+        }
       });
   };
 
