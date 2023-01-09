@@ -15,7 +15,7 @@ import {
 export const getAllBlogs = () => async (dispatch) => {
   try {
     const res = await blogService.getAll();
-    console.log(res.data[0].filePath.slice(45));
+    // console.log(res.data[0].filePath.slice(45));
     dispatch({
       type: Get_All_Blog,
       payload: res.data,

@@ -11,7 +11,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
-import { IconButton } from "@material-ui/core";
+//import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import userService from "../service/userService";
 
@@ -120,12 +120,12 @@ const NavbarDrawer = () => {
     <div>
       {["top"].map((anchor) => (
         <React.Fragment key={anchor}>
-          <IconButton
+          <Button
             onClick={toggleDrawer(anchor, true)}
             className={classes.barButton}
           >
-            <MenuIcon />
-          </IconButton>
+            <MenuIcon style={{ color: "white" }} />
+          </Button>
 
           <SwipeableDrawer
             anchor={anchor}

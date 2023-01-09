@@ -45,44 +45,51 @@ public class BlogController {
 //        return ResponseEntity.status(HttpStatus.CREATED).body("success");
 //    }
 
+    // add blog to DB
     @PostMapping("/{author}")
     public ResponseEntity<?> addBlogs(@RequestParam("image") MultipartFile image,
                                       @RequestParam("title") String title,
                                       @RequestParam("description") String description,
                                       @PathVariable("author") long id) throws IOException {
         Author author = authorRepository.findById(id).orElseThrow();
-        String filePath = FOLDER_PATH + image.getOriginalFilename();
+        String fileMoveDir = FOLDER_PATH + image.getOriginalFilename();
+        String filePath = "uploads/" + image.getOriginalFilename();
         Blog blog = new Blog(title,description,filePath,author);
         blogRepository.save(blog);
-        image.transferTo(new File(filePath));
+        image.transferTo(new File(fileMoveDir));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ResponseData<Blog>(blog,"Blog added successfully"));
     }
 
+    // get all blogs
     @GetMapping
     public ResponseEntity<?> getAllBlogs(){
        List<Blog> blog = blogRepository.findAll(Sort.by("id").descending());
         return ResponseEntity.status(HttpStatus.OK).body(blog);
     }
 
+    // delete blog by id
     @DeleteMapping("/{id}")
     ResponseEntity<?> deleteBlog(@PathVariable("id") long id){
         blogRepository.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseData<String>(null,"Successfully Deleted"));
     }
 
+    // get blog by username
     @GetMapping("/username/{name}")
     public ResponseEntity<?> getBlogByUsername(@PathVariable("name") String name){
         List<Blog> blog=  blogRepository.findByAuthorUsername(name,Sort.by("id").descending());
         return ResponseEntity.status(HttpStatus.OK).body(blog);
     }
 
+    // get blog by id
     @GetMapping("/{id}")
     public ResponseEntity<?> getBlogById(@PathVariable("id") long id){
         Blog blog=  blogRepository.findById(id).orElseThrow();
         return ResponseEntity.status(HttpStatus.OK).body(blog);
     }
 
+    // update blog by id
 @PutMapping("/update/{id}")
     public ResponseEntity<?> editBlog(@PathVariable("id") long id,@RequestBody Blog blog){
     Blog edit_blog=  blogRepository.findById(id).orElseThrow();

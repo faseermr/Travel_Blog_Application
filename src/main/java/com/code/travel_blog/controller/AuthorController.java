@@ -39,6 +39,7 @@ public class AuthorController {
     @Autowired
     JwtUtills jwtUtills;
 
+    // create user account
 @PostMapping("/signup")
 public ResponseEntity<?> createUser(@Valid @RequestBody SignupRequest signupRequest){
     //System.out.println("body : " + signupRequest.getUsername());
@@ -64,6 +65,7 @@ return ResponseEntity.status(HttpStatus.CREATED).body(new MessageResponse("Succe
 
 }
 
+// login user account
 @PostMapping("/signin")
 public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest){
     //System.out.println("body : "+ loginRequest.getUsername() + " " + loginRequest.getPassword());
@@ -91,6 +93,7 @@ public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest){
     );
 }
 
+// get all authors
 @GetMapping("/authors")
 public ResponseEntity<?> getAllAuthors(){
     List<Author> authors = authorRepository.findAll();

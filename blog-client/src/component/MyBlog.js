@@ -66,7 +66,7 @@ const MyBlog = () => {
               <CardHeader title={blog.title}></CardHeader>
               <Divider />
               <CardContent>
-                <img className={classes.media} src={blog.filePath.slice(45)} />
+                <img className={classes.media} src={blog.filePath} />
 
                 <Typography paragraph>{blog.description}</Typography>
               </CardContent>

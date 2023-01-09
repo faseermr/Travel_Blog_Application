@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
+    [theme.breakpoints.up("md")]: {
+      display: "block",
+    },
   },
 }));
 
